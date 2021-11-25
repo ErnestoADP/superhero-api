@@ -36,3 +36,26 @@ $(document).ready(function() {
     });
 
 });
+/**--------------------------------------------------------------------------------------------------- */
+let mostrar = $('#mostrar');
+$.ajax({
+    type: 'GET',
+    url: 'https://www.mindicador.cl/api',
+    success: (datosHero) => {
+        console.table(datosHero);
+        console.info(datosHero.dolar);
+
+        mostrar.html(`<h2>Dolar</h2>
+             <p>${datosHero.dolar.valor}</p>
+        
+        `);
+    },
+    error: (error) => {
+        console.log(error `Cdigo de rror: ${error.status}`)
+        console.log(error.statusText)
+        console.log(error.responseText)
+
+
+    }
+
+})
