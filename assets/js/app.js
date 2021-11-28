@@ -1,32 +1,56 @@
-/** ---------------------------   error: (error) => {
-        console.log(error `Codigo de rror: ${error.status}`)
-        console.log(error.statusText)
-        console.log(error.responseText)
-    }----------------------------------------------------------------------- */
+/**Funcion que no deja escribir o pegar letras y simbolos**/
+$(function() {
 
+    $('#inputNumber').keypress(function(e) {
+            if (isNaN(this.value + String.fromCharCode(e.charCode)))
+                return false;
+        })
+        .on("cut copy paste", function(e) {
+            e.preventDefault();
+        });
+
+});
 
 
 /**funcion para traer la api y parciarla mediante el metodo click por el boton traemos el numero*/
 $('#button-addon2').click(function(event) {
-        /**aqui parciamos y vemos la entrada del numero en el input */
-        let numeroHero = parseInt($('#inputNumber').val());
+    /**aqui parciamos y vemos la entrada del numero en el input */
+    let numeroHero = parseInt($('#inputNumber').val());
 
-        $.ajax({
-            /**aqui traemos la api mas el numero ingresado del input */
-            url: `https://superheroapi.com/api/10227257603166405/${numeroHero}`,
-            success: (datosHero) => {
-                generarGrafico(datosHero);
-                cuerpoCard(datosHero);
-                window.onload(datosHero);
+    if (numeroHero >= 733) {
+        alert("HÉROE NO EXISTENTE")
 
-            },
-        });
+        return
+    }
 
-    })
-    /**--------------------------------------------------------------------------------------------*/
+    $.ajax({
+        /**aqui traemos la api mas el numero ingresado del input */
+        url: `https://superheroapi.com/api/10227257603166405/${numeroHero}`,
+
+        success: (datosHero) => {
+
+
+            generarGrafico(datosHero);
+            cuerpoCard(datosHero);
+            window.onload(datosHero);
+
+        },
+    });
+
+
+})
+
+/**--------------------------------------------------------------------------------------------*/
 
 /**funcion para traer los datos que necesitamos */
 function cuerpoCard(datosHero) {
+
+
+
+
+
+
+
     tituloHeroe = $('.h1')
     tituloHeroe.empty();
     tituloHeroe.append("SuperHero Encontrado ");
@@ -68,6 +92,9 @@ function cuerpoCard(datosHero) {
     alianzasHeroe.append("Alianzas:  " + datosHero.biography.aliases);
 
     imgHero = $('.img-fluid').attr("src", datosHero.image.url);
+
+
+
 }
 /**--------------------------------------------------------------------------------------------*/
 /**grafico */
